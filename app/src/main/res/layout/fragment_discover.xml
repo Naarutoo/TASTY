@@ -3,17 +3,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".View.fragments.DiscoverFragment">
+    tools:context=".view.fragments.DiscoverFragment">
 
+
+<!--    <com.arlib.floatingsearchview.FloatingSearchView-->
+<!--        android:id="@+id/floating_search_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:floatingSearch_searchHint="Search..."-->
+<!--        app:floatingSearch_suggestionsListAnimDuration="250"-->
+<!--        app:floatingSearch_showSearchKey="false"-->
+<!--        app:floatingSearch_leftActionMode="showHamburger"-->
+<!--        app:floatingSearch_close_search_on_keyboard_dismiss="true"/>-->
+
+
+
+    <TextView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:queryHint="Enter Dish Name"
+        android:iconifiedByDefault="false"
+        android:background="@drawable/searchview_bg"
+        />
+
+    <LinearLayout
+        android:id="@+id/frame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/frameImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_launcher_background"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/frameName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Food Name"
+            android:textSize="30sp"
+
+
+            />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/mainRecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/fooditem_view" />
+        app:layout_constraintTop_toBottomOf="@id/frame" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.tasty.model.local.DAO
 import com.example.tasty.model.remote.Network
 import com.example.tasty.model.remote.api.ApiService
+import com.example.tasty.model.remote.api.ResultsItem
+import com.example.tasty.model.remote.api.SearchResponse
 import com.example.tasty.model.remote.api.response.ItemX
 import com.example.tasty.model.remote.api.response.ResponseDTO
 import com.example.tasty.model.remote.api.response.Result
@@ -13,24 +15,34 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class Repo(val dao: DAO) {
-
-    fun getDataFromApi(): LiveData<List<Result>> {
+class Repo() {
+    val liveData = MutableLiveData<List<Result>>()
+    fun getDataFromApi(): LiveData<List<Result>> {       // liveData vs mutableLiveData!! why we have not used livedata here
         CoroutineScope(IO).launch {
-            try {
+            try {                                              // try is for scenerio if internet is not available it doesn't crash
                 val list = Network.api.getData().results
-                if (list != null) {
-                    dao.deleteData()
-                }
-                list?.forEach {
-                    dao.insertData(it!!)
-                }
-
+                liveData.postValue(list)
             } catch (e: Exception) {
-
-
             }
         }
-        return dao.getData()
+        return liveData
     }
+
+    val liveData2 = MutableLiveData<ItemX>()
+    fun getDetailFromApi(int: Int): MutableLiveData<ItemX> {
+        CoroutineScope(IO).launch {
+            liveData2.postValue(Network.api.getDetail(int))
+
+        }
+        return liveData2
+    }
+
+    val liveData3 = MutableLiveData<SearchResponse>()
+    fun getSearchDataFromApi(string: String): MutableLiveData<SearchResponse> {
+        CoroutineScope(IO).launch {
+            liveData3.postValue(Network.api.getSearchview(string))
+        }
+        return liveData3
+    }
+
 }
